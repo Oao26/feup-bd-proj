@@ -29,9 +29,9 @@ CREATE TABLE Campeonato(
 );
 
 CREATE TABLE Divisao(
-    nomeDivisao INT PRIMARY KEY,
+    nomeDivisao VARCHAR(25) PRIMARY KEY,
     idCampeonato INT NOT NULL,
-    FOREIGN KEY (idCampeonato) REFERENCES Campeonato (idCampeonato)
+    FOREIGN KEY (idCampeonato) REFERENCES Campeonato (idCampeonato) 
 );
 
 CREATE TABLE Pessoa(
@@ -50,19 +50,19 @@ CREATE TABLE Jornada(
 CREATE TABLE Equipa(
     nomeEquipa VARCHAR(25) PRIMARY KEY,
     treinador VARCHAR(15) UNIQUE NOT NULL,
-    nomeDivisao INT NOT NULL,
+    nomeDivisao VARCHAR(25) NOT NULL,
     idCampeonato INT NOT NULL,
     FOREIGN KEY (nomeDivisao) REFERENCES Divisao(nomeDivisao),
     FOREIGN KEY (idCampeonato) REFERENCES Campeonato(idCampeonato),
-    FOREIGN KEY (treinador) REFERENCES Pessoa(cc)
-);
+    FOREIGN KEY (treinador) REFERENCES Pessoa(cc) 
+    );
 
 CREATE TABLE Jogador(
     cc VARCHAR(15) PRIMARY KEY,
     nGolos INT CHECK (nGolos>=0),
     numJogos INT CHECK (numJogos>=0),
     posicao VARCHAR(15) CHECK (posicao IN ("Ponta","Lateral","Pivô","Central","Guarda-Redes")),
-    FOREIGN KEY (cc) REFERENCES Pessoa(cc)
+    FOREIGN KEY (cc) REFERENCES Pessoa(cc) 
 );
 
 CREATE TABLE Jogo(
@@ -80,15 +80,15 @@ CREATE TABLE Jogo(
     FOREIGN KEY (idCampeonato) REFERENCES Campeonato(idCampeonato),
     FOREIGN KEY (idJornada) REFERENCES Jornada(idJornada),
     FOREIGN KEY (equipaCasa) REFERENCES Equipa(nomeEquipa),
-    FOREIGN KEY (equipaFora) REFERENCES Equipa(nomeEquipa)
+    FOREIGN KEY (equipaFora) REFERENCES Equipa(nomeEquipa) 
 );
 
 CREATE TABLE Evento(
     idEvento INT,
-    minuto FLOAT CHECK (minuto>=0 & minuto<=60),
+    minuto FLOAT CHECK (minuto>=0 & minuto<=90),
     tipo VARCHAR(10) NOT NULL,
     idJogo INT NOT NULL,
-    FOREIGN KEY (idJogo) REFERENCES Jogo(idJogo)
+    FOREIGN KEY (idJogo) REFERENCES Jogo(idJogo) 
 );
 
 CREATE TABLE Membro(
@@ -96,7 +96,7 @@ CREATE TABLE Membro(
     nomeEquipa VARCHAR(25) NOT NULL,
     numero INT CHECK (numero<100),
     capitao CHAR CHECK ( capitao IN ('V','F')),
-    FOREIGN KEY (cc) REFERENCES Jogador(cc),
+    FOREIGN KEY (cc) REFERENCES Jogador(cc) ,
     FOREIGN KEY (nomeEquipa) REFERENCES Equipa(nomeEquipa)
 );
 
@@ -104,11 +104,11 @@ CREATE TABLE Jogou(
     idJogo INT,
     cc VARCHAR(15),
     nGolos INT CHECK (nGolos>=0),
-    nCartoes INT CHECK (nCartoes>=0),
+    nCartoes INT CHECK (nCartoes>=0 & nCartoes <= 3),
     nExclusoes INT CHECK (nExclusoes>=0 & nExclusoes<=3),
     PRIMARY KEY (idJogo,cc),
     FOREIGN KEY (idJogo) REFERENCES Jogo(idJogo),
-    FOREIGN KEY(cc) REFERENCES Jogador(cc)
+    FOREIGN KEY(cc) REFERENCES Jogador(cc) 
 );
 
 CREATE TABLE Arbitrou(
@@ -116,7 +116,7 @@ CREATE TABLE Arbitrou(
     cc VARCHAR(15),
     PRIMARY KEY (idJogo,cc),
     FOREIGN KEY (idJogo) REFERENCES Jogo(idJogo),
-    FOREIGN KEY (cc) REFERENCES Pessoa(cc)
+    FOREIGN KEY (cc) REFERENCES Pessoa(cc)  
 );
 
 CREATE TABLE EquipaJornada(
@@ -128,6 +128,7 @@ CREATE TABLE EquipaJornada(
     nDerrotas INT CHECK (nDerrotas>=0),
     nGolos INT CHECK (nGolos>=0),
     PRIMARY KEY (idJornada,nomeEquipa),
-    FOREIGN KEY (idJornada) REFERENCES Pessoa(idJornada),
+    FOREIGN KEY (idJornada) REFERENCES Jornada(idJornada),
     FOREIGN KEY (nomeEquipa) REFERENCES Equipa(nomeEquipa)
 );
+

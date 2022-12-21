@@ -2,7 +2,7 @@
 .headers ON
 .nullvalue NULL
 
-SELECT nomePavilhao as 'Pavilhao', localizacao as 'Local', dataJogo as 'Data', idJornada as 'Jornada' 
+SELECT nomePavilhao as 'Pavilhao', localizacao as 'Local', dataJogo as 'Data', Jogo.idJogo as 'Jogo', idJornada as 'Jornada' 
 FROM Pavilhao JOIN Jogo ON Pavilhao.idPavilhao = Jogo.idPavilhao 
 WHERE Jogo.idJogo = 
 (SELECT id FROM 

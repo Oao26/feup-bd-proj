@@ -1,2 +1,0 @@
-DROP TRIGGER IF EXISTS validate_Jogo;
-DROP TRIGGER IF EXISTS Remove_Jogo;

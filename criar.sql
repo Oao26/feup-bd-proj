@@ -76,7 +76,7 @@ CREATE TABLE Jogo(
     idJornada INT CHECK (idJornada>=0),
     equipaCasa VARCHAR(25) NOT NULL,
     equipaFora VARCHAR(25) NOT NULL,
-    FOREIGN KEY (idPavilhao) REFERENCES Pavilhao(odPavilhao),
+    FOREIGN KEY (idPavilhao) REFERENCES Pavilhao(idPavilhao),
     FOREIGN KEY (idCampeonato) REFERENCES Campeonato(idCampeonato),
     FOREIGN KEY (idJornada) REFERENCES Jornada(idJornada),
     FOREIGN KEY (equipaCasa) REFERENCES Equipa(nomeEquipa),
